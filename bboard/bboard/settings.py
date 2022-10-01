@@ -132,3 +132,18 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'username@gmail.com'
 EMAIL_HOST_PASSWORD = 'password'
 EMAIL_PORT = 587
+
+
+
+TEMPLATES = [
+   {
+       'BACKEND': 'django.template.backends.django.DjangoTemplates',
+...
+       'OPTIONS': {
+           'context_processors': [
+...
+               'main.middlewares.bboard_context_processor',
+           ],
+       },
+   },
+]
