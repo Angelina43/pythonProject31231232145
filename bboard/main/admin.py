@@ -7,6 +7,8 @@ from .utilities import send_activation_notification
 from .models import SuperRubric, SubRubric
 
 from .forms import SubRubricForm
+
+
 def send_activation_notifications(modeladmin, request, queryset):
    for rec in queryset:
        if not rec.is_activated:

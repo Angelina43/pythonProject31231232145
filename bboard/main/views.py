@@ -12,13 +12,15 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from django.views.generic.base import TemplateView
 
+
+
 from .forms import RegisterUserForm
 
 from .forms import ChangeUserInfoForm
 from .models import AdvUser
 
 from django.core.signing import BadSignature
-from .utilities import signer
+
 
 from django.views.generic import UpdateView, CreateView, DeleteView
 from django.contrib.auth import logout
@@ -130,3 +132,4 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin,
 
     def by_rubric(request, pk):
         pass
+
