@@ -1,3 +1,5 @@
+#контролеры
+
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import TemplateDoesNotExist
@@ -12,8 +14,6 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from django.views.generic.base import TemplateView
 
-
-
 from .forms import RegisterUserForm
 
 from .forms import ChangeUserInfoForm
@@ -21,11 +21,16 @@ from .models import AdvUser
 
 from django.core.signing import BadSignature
 
-
 from django.views.generic import UpdateView, CreateView, DeleteView
 from django.contrib.auth import logout
 from django.contrib import messages
+from .utilities import signer
 
+from django.core.paginator import Paginator
+from django.db.models import Q
+
+from .forms import SearchForm
+from .models import SubRubric, Bb
 
 def index(request):
    return render(request, 'main/index.html')
@@ -112,6 +117,24 @@ class DeleteUserView(LoginRequiredMixin, DeleteView):
            queryset = self.get_queryset()
        return get_object_or_404(queryset, pk=self.user_id)
 
+def by_rubric(request, pk):
+   rubric = get_object_or_404(SubRubric, pk=pk)
+   bbs = Bb.objects.filter(is_active=True, rubric=pk)
+   if 'keyword' in request.GET:
+       keyword = request.GET['keyword']
+       q = Q(title__icontains=keyword) | Q(content__icontains=keyword)
+       bbs = bbs.filter(q)
+   else:
+       keyword = ''
+   form = SearchForm(initial={'keyword': keyword})
+   paginator = Paginator(bbs, 2)
+   if 'page' in request.GET:
+       page_num = request.GET['page']
+   else:
+       page_num = 1
+   page = paginator.get_page(page_num)
+   context = {'rubric': rubric, 'page': page, 'bbs': page.object_list, 'form': form}
+   return render(request, 'main/by_rubric.html', context)
 
 class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin,
                          UpdateView):
@@ -133,3 +156,9 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin,
     def by_rubric(request, pk):
         pass
 
+
+def detail(request, rubric_pk, pk):
+   bb = get_object_or_404(Bb, pk=pk)
+   ais = bb.additionalimage_set.all()
+   context = {'bb': bb, 'ais': ais}
+   return render(request, 'main/detail.html', context)

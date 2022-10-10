@@ -10,6 +10,7 @@ from .views import RegisterUserView, RegisterDoneView
 from .views import DeleteUserView
 from .views import user_activate
 from .views import by_rubric
+from .views import detail
 
 
 app_name = 'main'
@@ -32,4 +33,6 @@ urlpatterns = [
    path('accounts/profile/change/', ChangeUserInfoView.as_view(), name='profile_change'),
    path('<int:pk>/', by_rubric, name='by_rubric'),
    path('<str:page>/', other_page, name='other'),
+   path('<int:rubric_pk>/<int:pk>/', detail, name='detail'),
+   path('<int:pk>/', by_rubric, name='by_rubric'),
 ]
