@@ -8,6 +8,9 @@ from .models import user_registrated
 
 from .models import SuperRubric, SubRubric
 
+from .models import Bb, AdditionalImage
+from django.forms import inlineformset_factory
+
 class ChangeUserInfoForm(forms.ModelForm):
    email = forms.EmailField(required=True,
                             label='Адрес электронной почты')
@@ -70,3 +73,11 @@ class Meta:
 
 class SearchForm(forms.Form):
    keyword = forms.CharField(required=False, max_length=20, label='')
+
+class BbForm(forms.ModelForm):
+   class Meta:
+       model = Bb
+       fields = '__all__'
+       widgets = {'author': forms.HiddenInput}
+
+AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')

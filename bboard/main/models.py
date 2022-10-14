@@ -15,6 +15,10 @@ class AdvUser(AbstractUser):
     send_messages = models.BooleanField(default=True,
                                         verbose_name='Оповещать при новых комментариях?')
 
+    def is_author(self, bb):
+        if self.pk == bb.author.pk:
+            return True
+        return False
     class Meta(AbstractUser.Meta):
         pass
     def delete(self, *args, **kwargs):

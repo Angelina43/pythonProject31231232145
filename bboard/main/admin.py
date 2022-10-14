@@ -89,8 +89,3 @@ class BbAdmin(admin.ModelAdmin):
    fields = (('rubric', 'author'), 'title', 'content', 'price',
              'contacts', 'image', 'is_active')
    inlines = (AdditionalImageInline,)
-
-def index(request):
-   bbs = Bb.objects.filter(is_active=True)[:10]
-   context = {'bbs':bbs}
-   return render(request, 'main/index.html', context)

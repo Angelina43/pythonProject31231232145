@@ -29,7 +29,7 @@
        </div>
        {% else %}
        <a class="p-2 text-dark" href="{% url 'main:register' %}">Регистрация</a>
-       <a class="p-2 text-dark" href="#">Вход</a>
+       <a class="p-2 text-dark" href="{% url 'main:login' %}">Вход</a>
        {% endif %}
        <a class="nav-link root" href="{% url 'main:other' page='about' %}">О сайте</a>
    </div>

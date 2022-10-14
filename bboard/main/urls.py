@@ -11,7 +11,9 @@ from .views import DeleteUserView
 from .views import user_activate
 from .views import by_rubric
 from .views import detail
-
+from .views import profile_bb_add
+from .views import profile_bb_delete
+from .views import profile_bb_change
 
 app_name = 'main'
 
@@ -35,4 +37,9 @@ urlpatterns = [
    path('<str:page>/', other_page, name='other'),
    path('<int:rubric_pk>/<int:pk>/', detail, name='detail'),
    path('<int:pk>/', by_rubric, name='by_rubric'),
+   path('accounts/profile/add/', profile_bb_add, name='profile_bb_add'),
+   path('accounts/profile/', profile, name='profile'),
+   path('accounts/profile/change/<int:pk>/', profile_bb_change, name='profile_bb_change'),
+   path('accounts/profile/delete/<int:pk>/', profile_bb_delete, name='profile_bb_delete'),
+   path('accounts/profile/', profile, name='profile'),
 ]

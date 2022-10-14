@@ -36,12 +36,5 @@
    {% endif %}
    <p><a href="{% url 'main:by_rubric' pk=bb.rubric.pk %}{{ all }}">Назад</a></p>
 {% endblock %}
-<div class="d-flex justify-content-berween flex-wrap mt-5">
-   {% for ai in ais %}
-       <div>
-           <img src="{{ ai.image.url }}" class="additional-image">
-       </div>
-   {% endfor %}
-</div>
 </body>
 </html>
