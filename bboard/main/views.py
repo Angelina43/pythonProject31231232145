@@ -168,6 +168,10 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin,
         return get_object_or_404(queryset, pk=self.user_id)
 
 
+class GuestCommentForm:
+    pass
+
+
 def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
     ais = bb.additionalimage_set.all()
